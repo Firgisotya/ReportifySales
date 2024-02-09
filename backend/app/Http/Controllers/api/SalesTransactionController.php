@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RangeDateRequest;
 use App\Http\Requests\SalesTransactionRequest;
 use App\Models\SalesReport;
 use App\Models\SalesTransaction;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
@@ -13,11 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SalesTransactionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use ApiResponse;
     public function index()
     {
         try {

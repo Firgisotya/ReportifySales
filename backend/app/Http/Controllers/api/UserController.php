@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    use ApiResponse;
     public function index()
     {
         try {
@@ -52,8 +50,8 @@ class UserController extends Controller
         try {
             $user = User::create([
                 'nik' => $request->nik,
-                'nama_user' => $request->nama_user,
                 'password' => Hash::make($request->password),
+                'role_id' => 2
             ]);
             return response()->json([
                 'status' => 'success',
@@ -127,7 +125,6 @@ class UserController extends Controller
             }
             $user->update([
                 'nik' => $request->nik,
-                'password' => Hash::make($request->password),
             ]);
             return response()->json([
                 'status' => 'success',
