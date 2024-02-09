@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SalesReportSeeder extends Seeder
+class SalesTransactionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,9 @@ class SalesReportSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sales_reports')->insert([
+        DB::table('sales_transactions')->insert([
             [
+                'transaction_id' => 'TRX0001',
                 'sales_id' => 1,
                 'customer_id' => 1,
                 'paket_id' => 1,
@@ -23,6 +24,7 @@ class SalesReportSeeder extends Seeder
                 'total_harga' => 1000000,
             ],
             [
+                'transaction_id' => 'TRX0002',
                 'sales_id' => 2,
                 'customer_id' => 2,
                 'paket_id' => 2,
@@ -30,6 +32,7 @@ class SalesReportSeeder extends Seeder
                 'total_harga' => 2000000,
             ],
             [
+                'transaction_id' => 'TRX0003',
                 'sales_id' => 1,
                 'customer_id' => 3,
                 'paket_id' => 3,

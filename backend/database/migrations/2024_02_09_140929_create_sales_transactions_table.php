@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalesReportsTable extends Migration
+class CreateSalesTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateSalesReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_reports', function (Blueprint $table) {
-            $table->id();
+        Schema::create('sales_transactions', function (Blueprint $table) {
+            $table->string('transaction_id')->primary();
             $table->foreignId('sales_id')->constrained('sales');
             $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('paket_id')->constrained('pakets');

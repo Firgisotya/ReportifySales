@@ -13,6 +13,6 @@ class Customer extends Model
 
     public function salesReport()
     {
-        return $this->hasMany(SalesReport::class);
+        return $this->hasMany(SalesTransaction::class);
     }
 }

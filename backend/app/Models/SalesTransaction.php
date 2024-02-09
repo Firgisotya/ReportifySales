@@ -5,12 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SalesReport extends Model
+class SalesTransaction extends Model
 {
     use HasFactory;
 
     protected $table = 'sales_reports';
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'transaction_id',
+        'sales_id',
+        'customer_id',
+        'paket_id',
+        'tanggal_penjualan',
+        'total_harga'
+    ];
 
     public function customer()
     {

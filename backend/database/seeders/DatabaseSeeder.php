@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             SalesSeeder::class,
             PaketSeeder::class,
-            SalesReportSeeder::class,
+            SalesTransactionSeeder::class,
         ]);
     }
 }
