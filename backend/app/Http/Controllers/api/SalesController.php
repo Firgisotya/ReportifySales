@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalesRequest;
 use App\Models\Sales;
+use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -52,6 +53,11 @@ class SalesController extends Controller
                 'nik' => $request->nik,
                 'nama_sales' => $request->nama_sales,
                 'password' => Hash::make($request->password),
+            ]);
+            User::create([
+                'nik' => $request->nik,
+                'password' => Hash::make($request->password),
+                'role_id' => 2
             ]);
             return response()->json([
                 'status' => 'success',
@@ -105,10 +111,14 @@ class SalesController extends Controller
                     'message' => 'Sales tidak ditemukan'
                 ]);
             }
+            $user = User::where('nik', $sales->nik)->first();
             $sales->update([
                 'nik' => $request->nik,
                 'nama_sales' => $request->nama_sales,
-                'password' => Hash::make($request->password),
+            ]);
+            $user->update([
+                'nik' => $request->nik,
+                'role_id' => 2
             ]);
             return response()->json([
                 'status' => 'success',
@@ -139,6 +149,8 @@ class SalesController extends Controller
                     'message' => 'Sales tidak ditemukan'
                 ]);
             }
+            $user = User::where('nik', $sales->nik)->first();
+            $user->delete();
             $sales->delete();
             return response()->json([
                 'status' => 'success',

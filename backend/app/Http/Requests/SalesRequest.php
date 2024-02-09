@@ -28,7 +28,6 @@ class SalesRequest extends FormRequest
         return [
             'nik' => 'required|string',
             'nama_sales' => 'required|string|max:100',
-            'password' => 'required|string|min:8',
         ];
     }
 
