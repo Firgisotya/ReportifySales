@@ -4,7 +4,7 @@ import { login } from "../../services/auth/Auth";
 import Swal from "sweetalert2";
 
 const SignIn = () => {
-  const navifate = useNavigate();
+  const navigate = useNavigate();
   const [nik, setNik] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,11 +13,11 @@ const SignIn = () => {
         const data = { nik, password };
         login(data).then((response) => {
             console.log(response);
-            sessionStorage.setItem("token", response.token);
-            sessionStorage.setItem("user", JSON.stringify(response.data));
-            sessionStorage.setItem("role_id", response.data.role_id);
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.data));
+            localStorage.setItem("role", response.data.role_id);
 
-            navifate("/dashboard");
+            navigate("/dashboard");
         
             Swal.fire({
                 icon: "success",

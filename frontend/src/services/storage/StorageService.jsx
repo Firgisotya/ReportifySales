@@ -1,19 +1,18 @@
 
 const getToken = () => {
-    return sessionStorage.getItem("token");
+    return localStorage.getItem("token");
   }
   
   const removeLogged = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("role_id");
+    localStorage.removeItem("token");
     
   }
   
   const userLogged = () => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const role_id = sessionStorage.getItem("role_id");
-    return {user, role_id};
+    const token = getToken();
+    const user = localStorage.getItem("user");
+    const role = localStorage.getItem("role");
+    return { token, user: JSON.parse(user), role}
   }
 
   export { getToken, removeLogged, userLogged };

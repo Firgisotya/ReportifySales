@@ -2,16 +2,52 @@ import { React, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { updateCustomer } from "../../services/customer/CustomerService";
+import { BaseUrl } from "../../services/BaseUrl";
 
 const EditCustomer = ({customer, onUpdate}) => {
+
+    const imageUrl = BaseUrl().imageUrl
+
     const MySwal = withReactContent(Swal)
     const [namaCustomer, setNamaCustomer] = useState(customer.nama_customer)
     const [noTelepon, setNoTelepon] = useState(customer.no_telepon)
     const [alamat, setAlamat] = useState(customer.alamat)
     const [fotoKtp, setFotoKtp] = useState(customer.foto_ktp)
     const [fotoRumah, setFotoRumah] = useState(customer.foto_rumah)
+    const [previewKTP, setPreviewKTP] = useState(null)
+    const [previewRumah, setPreviewRumah] = useState(null)
 
     const modalId = `edit_customer_${customer.id}`
+
+    const handleKTP = (e) => {
+      const file = e.target.files[0];
+      const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+      if (file && ALLOWED_TYPES.includes(file.type)) {
+          let reader = new FileReader();
+          reader.onloadend = () => {
+              setPreviewKTP(reader.result);
+          };
+          reader.readAsDataURL(file);
+          setFotoKtp(file);
+      } else {
+          setPreviewKTP(null);
+      }
+  };
+
+  const handleRumah = (e) => {
+      const file = e.target.files[0];
+      const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+      if (file && ALLOWED_TYPES.includes(file.type)) {
+          let reader = new FileReader();
+          reader.onloadend = () => {
+              setPreviewRumah(reader.result);
+          };
+          reader.readAsDataURL(file);
+          setFotoRumah(file);
+      } else {
+          setPreviewRumah(null);
+      }
+  }
 
     const handleUpdate = async (e) => {
         e.preventDefault()
@@ -99,10 +135,15 @@ const EditCustomer = ({customer, onUpdate}) => {
           <input
             type="file"
             placeholder="Foto KTP"
-            className="input input-bordered"
-            value={customer.foto_ktp}
+            className="file-input"
+            accept="image/*"
             onChange={(e) => setFotoKtp(e.target.value)}
           />
+          {previewKTP ? (
+            <img width={100} height={100} src={previewKTP} alt="Foto KTP" />
+          ) : (
+            <img width={100} height={100} src={imageUrl + "/" + customer.foto_ktp} alt="Foto KTP" />
+          )}
         </div>
 
         <div className="form-control">
@@ -112,10 +153,15 @@ const EditCustomer = ({customer, onUpdate}) => {
           <input
             type="file"
             placeholder="Foto Rumah"
-            className="input input-bordered"
-            value={customer.foto_rumah}
+            className="file-input"
+            accept="image/*"
             onChange={(e) => setFotoRumah(e.target.value)}
           />
+          {previewRumah ? (
+            <img width={100} height={100} src={previewRumah} alt="Foto KTP" />
+          ) : (
+            <img width={100} height={100} src={imageUrl + "/" + customer.foto_rumah} alt="Foto Rumah" />
+          )}
         </div>
         <div className="modal-action space-x-2">
           <button className="btn btn-primary" onClick={handleUpdate}>

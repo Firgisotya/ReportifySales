@@ -122,8 +122,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
+
         try {
             $customer = Customer::find($id);
             if (!$customer) {
@@ -132,6 +133,7 @@ class CustomerController extends Controller
                     'message' => 'Customer tidak ditemukan'
                 ]);
             }
+
 
 
         // Update customer data

@@ -26,6 +26,7 @@ const getCustomerById = async (id) => {
 const createCustomer = async (data) => {
     const response = await axios.post(`${url}/customers`, data, {
         headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`
         }
     });
@@ -35,6 +36,7 @@ const createCustomer = async (data) => {
 const updateCustomer = async (id, data) => {
     const response = await axios.put(`${url}/customers/${id}`, data, {
         headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`
         }
     });

@@ -17,7 +17,7 @@ const getAllUsers = async () => {
 const createUser = async (user) => {
     const response = await axios.post(url + "/users", user, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            
         },
     });
     return response.data.data;

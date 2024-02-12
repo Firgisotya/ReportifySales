@@ -5,19 +5,58 @@ import { createCustomer } from "../../services/customer/CustomerService";
 
 const CreateCustomer = ({addedcustomer}) => {
     const MySwal = withReactContent(Swal);
-    const [customer, setCustomer] = useState({
-        nama_customer: "",
-        alamat: "",
-        no_telepon: "",
-        foto_ktp: "",
-        foto_rumah: "",
-    });
+    const [namaCustomer, setNamaCustomer] = useState("");
+    const [noTelepon, setNoTelepon] = useState("");
+    const [alamat, setAlamat] = useState("");
+    const [fotoKtp, setFotoKtp] = useState(null);
+    const [fotoRumah, setFotoRumah] = useState(null);
+    const [previewKTP, setPreviewKTP] = useState(null);
+    const [previewRumah, setPreviewRumah] = useState(null);
+
+
+    const handleKTP = (e) => {
+        const file = e.target.files[0];
+        const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        if (file && ALLOWED_TYPES.includes(file.type)) {
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewKTP(reader.result);
+            };
+            reader.readAsDataURL(file);
+            setFotoKtp(file);
+        } else {
+            setPreviewKTP(null);
+        }
+    };
+
+    const handleRumah = (e) => {
+        const file = e.target.files[0];
+        const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        if (file && ALLOWED_TYPES.includes(file.type)) {
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                setPreviewRumah(reader.result);
+            };
+            reader.readAsDataURL(file);
+            setFotoRumah(file);
+        } else {
+            setPreviewRumah(null);
+        }
+    }
 
     const handleCreate = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+
+        formData.append("nama_customer", namaCustomer)
+        formData.append("no_telepon", noTelepon)
+        formData.append("alamat", alamat)
+        formData.append("foto_ktp", fotoKtp)
+        formData.append("foto_rumah", fotoRumah)
+
         try {
-            const response = await createCustomer(customer)
-            addedcustomer(customer);
+            const response = await createCustomer(formData)
+            addedcustomer(response);
             document.getElementById("create_customer").close();
             MySwal.fire({
                 icon: "success",
@@ -55,8 +94,8 @@ const CreateCustomer = ({addedcustomer}) => {
             type="text"
             placeholder="Nama Customer"
             className="input input-bordered"
-            value={customer.nama_customer}
-            onChange={(e) => setCustomer({ ...customer, nama_customer: e.target.value })}
+            value={namaCustomer}
+            onChange={(e) => setNamaCustomer(e.target.value)}
           />
         </div>
       
@@ -68,8 +107,8 @@ const CreateCustomer = ({addedcustomer}) => {
             type="text"
             placeholder="Nomor Telepon"
             className="input input-bordered"
-            value={customer.no_telepon}
-            onChange={(e) => setCustomer({ ...customer, no_telepon: e.target.value })}
+            value={noTelepon}
+            onChange={(e) => setNoTelepon(e.target.value)}
           />
         </div>
 
@@ -79,8 +118,8 @@ const CreateCustomer = ({addedcustomer}) => {
           </label>
           <textarea className="input input-bordered" 
           placeholder="Alamat" 
-          value={customer.alamat}
-          onChange={(e) => setCustomer({...customer, alamat: e.target.value})}
+          value={alamat}
+          onChange={(e) => setAlamat(e.target.value)}
           >
             
           </textarea>
@@ -93,10 +132,13 @@ const CreateCustomer = ({addedcustomer}) => {
           <input
             type="file"
             placeholder="Foto KTP"
-            className="input input-bordered"
-            value={customer.foto_ktp}
-            onChange={(e) => setCustomer({ ...customer, foto_ktp: e.target.value })}
+            className="file-input input-bordered"
+            accept="image/*"
+            onChange={handleKTP}
           />
+          {previewKTP && (
+            <img width={100} height={100} src={previewKTP} alt="Foto KTP" />
+          )}
         </div>
 
         <div className="form-control">
@@ -106,10 +148,13 @@ const CreateCustomer = ({addedcustomer}) => {
           <input
             type="file"
             placeholder="Foto Rumah"
-            className="input input-bordered"
-            value={customer.foto_rumah}
-            onChange={(e) => setCustomer({ ...customer, foto_rumah: e.target.value })}
+            className="file-input input-bordered"
+            accept="image/*"
+            onChange={handleRumah}
           />
+          {previewRumah && (
+            <img width={100} height={100} src={previewRumah} alt="Foto Rumah" />
+          )}
         </div>
 
         <div className="modal-action space-x-2">

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
 
-  const role = userLogged().role_id;
+  const role = userLogged().role;
   console.log(role)
 
   return (

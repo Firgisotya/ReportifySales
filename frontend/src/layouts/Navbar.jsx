@@ -4,7 +4,7 @@ import { logout } from "../services/auth/Auth";
 
 const Navbar = ({ toggleSidebar }) => {
   const [isUserOpen, setIsUserOpen] = useState(false);
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Fungsi untuk mengubah status isSidebarOpen dan memanggil toggleSidebar

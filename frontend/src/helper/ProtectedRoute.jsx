@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-    let token = sessionStorage.getItem("token");
+    let token = localStorage.getItem("token");
     const user = token ? { loggedIn: true } : null;
     return user;
 }
