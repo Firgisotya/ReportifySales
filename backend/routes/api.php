@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     Route::apiResource('/users', UserController::class);
+    Route::put('/usersBySales', [UserController::class, 'updateBySales']);
+    Route::delete('/usersDestroyBySales', [UserController::class, 'destroyBySales']);
     Route::apiResource('/roles', RoleController::class);
     Route::apiResource('/paket', PaketController::class);
     Route::apiResource('/sales', SalesController::class);

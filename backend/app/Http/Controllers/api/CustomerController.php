@@ -122,10 +122,17 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
-            $customer = Customer::findOrFail($id);
+            $customer = Customer::find($id);
+            if (!$customer) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Customer tidak ditemukan'
+                ]);
+            }
+
 
         // Update customer data
         $customer->nama_customer = $request->nama_customer;

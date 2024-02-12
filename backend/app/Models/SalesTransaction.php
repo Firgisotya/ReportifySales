@@ -9,7 +9,7 @@ class SalesTransaction extends Model
 {
     use HasFactory;
 
-    protected $table = 'sales_reports';
+    protected $table = 'sales_transactions';
     protected $fillable = [
         'transaction_id',
         'sales_id',

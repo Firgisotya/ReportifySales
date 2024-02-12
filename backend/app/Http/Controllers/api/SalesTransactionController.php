@@ -19,11 +19,11 @@ class SalesTransactionController extends Controller
     public function index()
     {
         try {
-            $salesReport = SalesTransaction::with('sales', 'customer', 'paket')->orderBy('id', 'desc')->get();
+            $salesTransaction = SalesTransaction::with('sales', 'customer', 'paket')->orderBy('transaction_id', 'desc')->get();
             return response()->json([
                 'status' => 'success',
-                'message' => 'Sales Report berhasil ditampilkan',
-                'data' => $salesReport
+                'message' => 'Sales Transaction berhasil ditampilkan',
+                'data' => $salesTransaction
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -40,7 +40,7 @@ class SalesTransactionController extends Controller
             $endDate = Carbon::parse($request->end_date);
             $salesReport = SalesTransaction::with('sales', 'customer', 'paket')
                 ->whereBetween('tanggal_penjualan', [$startDate, $endDate])
-                ->orderBy('id', 'desc')
+                ->orderBy('transaction_id', 'desc')
                 ->get();
 
             return response()->json([
@@ -60,7 +60,7 @@ class SalesTransactionController extends Controller
     public function ReportAllSales()
     {
         try {
-            $salesReport = SalesTransaction::with('sales', 'customer', 'paket')->orderBy('id', 'desc')->get();
+            $salesReport = SalesTransaction::with('sales', 'customer', 'paket')->orderBy('transaction_id', 'desc')->get();
 
             $summedReport = $salesReport->groupBy('sales_id')->map(function ($groupedSales) {
             $totalPaket = $groupedSales->unique('paket_id')->count();

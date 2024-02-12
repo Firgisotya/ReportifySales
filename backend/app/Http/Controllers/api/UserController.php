@@ -139,6 +139,32 @@ class UserController extends Controller
         }
     }
 
+    public function updateBySales(UserRequest $request)
+    {
+        try {
+            $user = User::where('nik', $request->nik)->first();
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User tidak ditemukan'
+                ]);
+            }
+            $user->update([
+                'nik' => $request->nik,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User berhasil diupdate',
+                'data' => $user
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -149,6 +175,29 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User tidak ditemukan'
+                ]);
+            }
+            $user->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User berhasil dihapus'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
+    }
+
+    public function destroyBySales(Request $request)
+    {
+        try {
+            $user = User::where('nik', $request->nik)->first();
             if (!$user) {
                 return response()->json([
                     'status' => 'error',
