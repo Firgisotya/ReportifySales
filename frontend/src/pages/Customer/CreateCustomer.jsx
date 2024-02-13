@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { createCustomer } from "../../services/customer/CustomerService";
+import { getAllPaket, getPaketById } from "../../services/paket/PaketService"
 
 const CreateCustomer = ({addedcustomer}) => {
     const MySwal = withReactContent(Swal);
@@ -12,6 +13,30 @@ const CreateCustomer = ({addedcustomer}) => {
     const [fotoRumah, setFotoRumah] = useState(null);
     const [previewKTP, setPreviewKTP] = useState(null);
     const [previewRumah, setPreviewRumah] = useState(null);
+    const [paket, setPaket] = useState([]);
+    const [selectedPaket, setSelectedPaket] = useState(null);
+    const [totalHarga, setTotalHarga] = useState(0);
+
+    const fetchPaket = async () => {
+      try {
+        const response = await getAllPaket();
+        setPaket(response);   
+      } catch (error) {
+        
+      }
+    }
+
+    const handlePaketChange = async (e) => {
+      const selectedId = e.target.value;
+      try {
+        const res = await getPaketById(selectedId);
+        console.log(res);
+        setSelectedPaket(res.id);
+        setTotalHarga(res.harga);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
 
     const handleKTP = (e) => {
@@ -53,6 +78,7 @@ const CreateCustomer = ({addedcustomer}) => {
         formData.append("alamat", alamat)
         formData.append("foto_ktp", fotoKtp)
         formData.append("foto_rumah", fotoRumah)
+        formData.append("paket_id", selectedPaket)
 
         try {
             const response = await createCustomer(formData)
@@ -73,6 +99,10 @@ const CreateCustomer = ({addedcustomer}) => {
             });
         }
     }
+
+    useEffect(() => {
+      fetchPaket();
+    }, []);
 
   return (
      <>
@@ -124,6 +154,38 @@ const CreateCustomer = ({addedcustomer}) => {
             
           </textarea>
         </div>
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Paket</span>
+          </label>
+          <select
+            className="select select-bordered w-full"
+            onChange={handlePaketChange}
+          >
+            <option value="">Pilih Paket</option>
+            {paket.map((item, index) => (
+              <option key={index} value={item.id}>
+                {item.nama_paket}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {selectedPaket && (
+          <div className="form-control">
+          <label className="label">
+            <span className="label-text">Total Harga</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Total Harga"
+            className="input input-bordered"
+            value={totalHarga}
+            disabled
+          />
+        </div>
+        )}
 
         <div className="form-control">
           <label className="label">

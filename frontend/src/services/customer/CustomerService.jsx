@@ -6,6 +6,7 @@ const url = BaseUrl().apiUrl;
 const token = getToken()
 
 const getAllCustomers = async () => {
+    console.log(token);
     const response = await axios.get(`${url}/customers`, {
         headers: {
             Authorization: `Bearer ${token}`
@@ -34,7 +35,7 @@ const createCustomer = async (data) => {
 }
 
 const updateCustomer = async (id, data) => {
-    const response = await axios.put(`${url}/customers/${id}`, data, {
+    const response = await axios.post(`${url}/customers/${id}?_method=PUT`, data, {
         headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`

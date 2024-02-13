@@ -51,14 +51,15 @@ const EditCustomer = ({customer, onUpdate}) => {
 
     const handleUpdate = async (e) => {
         e.preventDefault()
+        const formData = new FormData()
+        formData.append("nama_customer", namaCustomer)
+        formData.append("no_telepon", noTelepon)
+        formData.append("alamat", alamat)
+        formData.append("foto_ktp", fotoKtp)
+        formData.append("foto_rumah", fotoRumah)
+
         try {
-            const response = await updateCustomer(customer.id, {
-                nama_customer: namaCustomer,
-                no_telepon: noTelepon,
-                alamat: alamat,
-                foto_ktp: fotoKtp,
-                foto_rumah: fotoRumah
-            })
+            const response = await updateCustomer(customer.id, formData)
             onUpdate(response)
             document.getElementById(modalId).close()
             MySwal.fire({
@@ -137,7 +138,7 @@ const EditCustomer = ({customer, onUpdate}) => {
             placeholder="Foto KTP"
             className="file-input"
             accept="image/*"
-            onChange={(e) => setFotoKtp(e.target.value)}
+            onChange={handleKTP}
           />
           {previewKTP ? (
             <img width={100} height={100} src={previewKTP} alt="Foto KTP" />
@@ -155,7 +156,7 @@ const EditCustomer = ({customer, onUpdate}) => {
             placeholder="Foto Rumah"
             className="file-input"
             accept="image/*"
-            onChange={(e) => setFotoRumah(e.target.value)}
+            onChange={handleRumah}
           />
           {previewRumah ? (
             <img width={100} height={100} src={previewRumah} alt="Foto KTP" />

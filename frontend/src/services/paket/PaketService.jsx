@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import { BaseUrl } from "../BaseUrl"
 import { getToken } from "../storage/StorageService";
@@ -16,6 +17,15 @@ const getAllPaket = async () => {
 
 const createPaket = async (paket) => {
     const response = await axios.post(url + "/paket", paket, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data.data;
+}
+
+const getPaketById = async (id) => {
+    const response = await axios.get(url + "/paket/" + id, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -42,4 +52,4 @@ const deletePaket = async (id) => {
     return response.data.data;
 }
 
-export { getAllPaket, createPaket, updatePaket, deletePaket };
+export { getAllPaket, createPaket, getPaketById, updatePaket, deletePaket };

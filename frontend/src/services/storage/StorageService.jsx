@@ -1,6 +1,7 @@
 
-const getToken = () => {
-    return localStorage.getItem("token");
+const getToken = async () => {
+    const token = await localStorage.getItem("token");
+    return token;
   }
   
   const removeLogged = () => {

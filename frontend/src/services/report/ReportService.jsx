@@ -50,4 +50,14 @@ const deleteSalesTransaction = async (id) => {
     return response.data.data;
 }
 
-export { getAllSalesTransaction, createSalesTransaction, detailSalesTransaction, updateSalesTransaction, deleteSalesTransaction }
+const reportExport = async () => {
+    const response = await axios.get(url + "/sales-transaction/report/export-pdf", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+    return response.data.data;
+}
+
+
+export { getAllSalesTransaction, createSalesTransaction, detailSalesTransaction, updateSalesTransaction, deleteSalesTransaction, reportExport }

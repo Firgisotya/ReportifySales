@@ -70,9 +70,27 @@ class PaketController extends Controller
      * @param  \App\Models\Paket  $paket
      * @return \Illuminate\Http\Response
      */
-    public function show(Paket $paket)
+    public function show($id)
     {
-        //
+        try {
+            $paket = Paket::find($id);
+            if (!$paket) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Paket tidak ditemukan'
+                ]);
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Paket berhasil ditampilkan',
+                'data' => $paket
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ]);
+        }
     }
 
     /**

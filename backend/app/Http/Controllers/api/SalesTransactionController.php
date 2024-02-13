@@ -69,6 +69,7 @@ class SalesTransactionController extends Controller
 
             return [
                 'sales_id' => $groupedSales->first()->sales_id,
+                'nama_sales' => $groupedSales->first()->sales->nama_sales,
                 'total_paket' => $totalPaket,
                 'total_customer' => $totalCustomer,
                 'total_pendapatan' => $totalPrice,

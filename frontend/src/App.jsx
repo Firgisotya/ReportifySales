@@ -10,6 +10,8 @@ import UserRoutes from "./routes/UserRoutes";
 import PaketRoutes from "./routes/PaketRoutes";
 import SalesRoutes from "./routes/SalesRoutes";
 import CustomerRoutes from "./routes/CustomerRoutes";
+import TransactionRoute from "./routes/TransactionRoute";
+import ExportSalesTransaction from "./pages/Export/ExportSalesTransaction";
 
 function App() {
   return (
@@ -63,7 +65,25 @@ function App() {
                 </Main>
               }
             />
+             <Route
+              path="transaction"
+              element={
+                <Main>
+                  <TransactionRoute />
+                </Main>
+              }
+            />
+
+            <Route
+              path="export"
+              element={
+                  <ExportSalesTransaction />  
+              }
+            />
+
           </Route>
+
+          
         </Routes>
       </BrowserRouter>
     </>
